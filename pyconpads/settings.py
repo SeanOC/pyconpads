@@ -66,6 +66,8 @@ INSTALLED_APPS = (
     # Third Party Apps
     'django_extensions',
     'annoying',
+    # Local Apps
+    'pads',
 )
 
 from local_settings import *
