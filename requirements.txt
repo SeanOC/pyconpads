@@ -1,3 +1,5 @@
+werkzeug
+
 -e svn+http://code.djangoproject.com/svn/django/trunk/#egg=django
 -e git+git://github.com/django-extensions/django-extensions.git#egg=django_extensions
 -e hg+http://bitbucket.org/offline/django-annoying/#egg=django_annoying

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<ul>
+  {% for pad in pads %}
+    <li><a href="{{ pad.etherpad_url }}">{{ pad.id }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

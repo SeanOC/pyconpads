@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Pad(models.Model):
@@ -11,3 +12,12 @@ class Pad(models.Model):
         
     def __unicode__(self):
         return self.id
+        
+    def etherpad_url(self):
+        return settings.ETHERPAD_URL + self.id
+        
+class PadMeta(models.Model):
+    pad = models.ForeignKey(Pad)
+    name = models.CharField(max_length=500, blank=True)
+    talk_time = models.DateTimeField(null=True, blank=True)
+        
