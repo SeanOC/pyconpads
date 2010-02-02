@@ -1,15 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-	<title>{% block title %}PyCon Pads - Sponsored by HUGE{% endblock %}</title>
-	
+  <title>{% block title %}PyCon Pads - Sponsored by HUGE{% endblock %}</title>
+  {% block css %}{% endblock %}
 </head>
 
 <body>
 {% block main_content %}{% endblock %}
+{% block js %}
+<script src="{{ MEDIA_URL }}site/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}site/js/jquery.jeditable.min.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
 </body>
 </html>

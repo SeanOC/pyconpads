@@ -17,7 +17,7 @@ class Pad(models.Model):
         return settings.ETHERPAD_URL + self.id
         
 class PadMeta(models.Model):
-    pad = models.ForeignKey(Pad)
+    pad = models.OneToOneField(Pad)
     name = models.CharField(max_length=500, blank=True)
     talk_time = models.DateTimeField(null=True, blank=True)
-        
+    hide = models.BooleanField(default=False)

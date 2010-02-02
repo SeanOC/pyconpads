@@ -1,9 +1,44 @@
 {% extends "base.html" %}
 
+{% block js %}
+  {{ block.super }}
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      $('#edit-btn').toggle(
+        function() {
+          $('.pad').hide();
+          $('.pad-edit').show();
+          $(this).text('Link');
+        }, function() {
+          $('.pad').show();
+          $('.pad-edit').hide();
+          $(this).text('Edit');
+        }
+      );
+      $('.pad-edit span').editable("", {
+        tooltip: 'click to edit...',
+        indicator: '<img src="{{ MEDIA_URL }}site/imgs/ajax-loader.gif" />',
+        type: 'textarea',
+        style  : "inherit"
+      });
+   });
+  </script>
+{% endblock %}
+
+{% block css %}
+<style type="text/css" media="screen">
+  .pad-edit {
+    display: none;
+  }
+</style>
+{% endblock %}
+
 {% block main_content %}
+<a href="#" id="edit-btn">Edit</a>
 <ul>
   {% for pad in pads %}
-    <li><a href="{{ pad.etherpad_url }}">{{ pad.id }}</a></li>
+    <li class="pad"><a href="{{ pad.etherpad_url }}">{{ pad.id }}</a></li>
+    <li class="pad-edit"><span>{{ pad.id }}</span></li>
   {% endfor %}
 </ul>
 {% endblock %}
