@@ -11,7 +11,13 @@ class Pad(models.Model):
         managed = False
         
     def __unicode__(self):
-        return self.id
+        name = self.id
+        
+        meta = self.padmeta
+        if meta:
+            name = meta.name
+            
+        return name
         
     def etherpad_url(self):
         return settings.ETHERPAD_URL + self.id

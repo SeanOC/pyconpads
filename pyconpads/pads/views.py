@@ -1,6 +1,10 @@
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 
-from pads.models import Pad
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+
+
+from pads.models import Pad, PadMeta
 
 @render_to('list.html')
 def pad_list(request):
@@ -9,3 +13,18 @@ def pad_list(request):
     return {
         'pads': pads,
     }
+
+@ajax_request
+def save_pad_name(request):
+    id = request.POST.get('id', None)
+    name = request.POST.get('value', None)
+    pad = get_object_or_404(Pad, id=id)
+    if not name:
+        raise Http404
+        
+    meta, created = PadMeta.objects.get_or_create(pad=pad, defaults={'name': name})
+    if not created:
+        meta.name = name
+        meta.save()
+        
+    return {'name': meta.name}
