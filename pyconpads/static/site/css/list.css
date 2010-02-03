@@ -1,6 +1,26 @@
-#pads-list th,
-#pads-list td {
+body {
+    font-family: Arial,Helvetica,sans-serif;
+    padding: 0 100px;
+    min-width: 800px;
+}
+
+.promo {
+    float: right;
+    margin: 0 0 1em 50px;
+    font-size: 15px;
+}
+.logo {
     width: 200px;
+    height: 67px;
+    margin-top: 3px;
+}
+.logo img {
+    border: none;
+}
+
+#pads-table th,
+#pads-table td {
+    min-width: 200px;
 }
 /* tablesorter */
 table.tablesorter {
