@@ -31,10 +31,9 @@
           result = $.parseJSON(result_json)
           $(this).text(result.date);
           $('#pads-table').trigger("update");
-          $('#pads-table').trigger("sorton");
         }
       });
-      $('#pads-table').tablesorter();
+      $('#pads-table').tablesorter({widthFixed: true, widgets: ['zebra']});
    });
   </script>
 {% endblock %}
@@ -56,7 +55,7 @@
     <tr>
       <td class="pad"><a href="{{ pad.etherpad_url }}">{{ pad.id }}</a></td>
       <td class="pad-description" id="{{ pad.id }}">{{ pad.description}}</td>
-      <td><span class="pad-date" id="{{ pad.id}}">{{ pad.talk_time|date:"m/d H:i" }}</span></td>
+      <td class="pad-date" id="{{ pad.id}}">{{ pad.talk_time|date:"m/d H:i" }}</td>
     </tr>
   {% endfor %}
   </tbody>
