@@ -9,6 +9,7 @@
   <script src="{{ MEDIA_URL }}site/js/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="{{ MEDIA_URL }}site/js/jquery.maskedinput.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="{{ MEDIA_URL }}site/js/jquery.jeditable.masked.js" type="text/javascript" charset="utf-8"></script>
+  <script src="{{ MEDIA_URL }}site/js/jquery.tablesorter.pager.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
       $('.pad-description').editable("{% url update-description %}", {
@@ -33,7 +34,9 @@
           $('#pads-table').trigger("update");
         }
       });
-      $('#pads-table').tablesorter({widthFixed: true, widgets: ['zebra']});
+      $('#pads-table')
+        .tablesorter({widthFixed: true, widgets: ['zebra']})
+        .tablesorterPager({container: $('#pager'), size: 30});
    });
   </script>
 {% endblock %}
@@ -60,4 +63,19 @@
   {% endfor %}
   </tbody>
 </table>
+<div id="pager" class="pager"> 
+	<form> 
+		<img src="{{ MEDIA_URL}}site/imgs/icons/first.png" class="first"/> 
+		<img src="{{ MEDIA_URL}}site/imgs/icons/prev.png" class="prev"/> 
+		<input type="text" class="pagedisplay"/> 
+		<img src="{{ MEDIA_URL}}site/imgs/icons/next.png" class="next"/> 
+		<img src="{{ MEDIA_URL}}site/imgs/icons/last.png" class="last"/> 
+		<select class="pagesize"> 
+			<option selected="selected"  value="10">10</option> 
+			<option value="20">20</option> 
+			<option value="30" selected="selected">30</option> 
+			<option  value="40">40</option> 
+		</select> 
+	</form> 
+</div>
 {% endblock %}
