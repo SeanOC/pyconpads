@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ MEDIA_URL }}site/css/list.css" type="text/css"  charset="utf-8">
+{% endblock %}
 {% block js %}
   {{ block.super }}
+  <script src="{{ MEDIA_URL }}site/js/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="{{ MEDIA_URL }}site/js/jquery.maskedinput.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="{{ MEDIA_URL }}site/js/jquery.jeditable.masked.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
@@ -13,6 +18,7 @@
         callback: function (result_json) {
                     result = $.parseJSON(result_json)
                     $(this).text(result.description);
+                    $('#pads-table').trigger('update');
                   }
       });
       $('.pad-date').editable("{% url update-date %}", {
@@ -24,39 +30,35 @@
         callback: function (result_json) {
           result = $.parseJSON(result_json)
           $(this).text(result.date);
+          $('#pads-table').trigger("update");
+          $('#pads-table').trigger("sorton");
         }
-      })
+      });
+      $('#pads-table').tablesorter();
    });
   </script>
-{% endblock %}
-
-{% block css %}
-<style type="text/css" media="screen">
-  .pad-edit {
-    display: none;
-  }
-  .pad-description, .pad-date {
-    display: inline;
-  }
-</style>
 {% endblock %}
 
 {% block main_content %}
 <h1>Pad Index</h1>
 <div class="promo">sponsored by HUGE</div>
 <p>Here are all of the pads 
-<table id="pads">
+<table id="pads-table" class="tablesorter">
+  <thead>
   <tr>
     <th>Pad</th>
     <th>Description</th>
     <th>Talk Time</th>
   </tr>
+  </thead>
+  <tbody>
   {% for pad in pads %}
     <tr>
       <td class="pad"><a href="{{ pad.etherpad_url }}">{{ pad.id }}</a></td>
-      <td><span class="pad-description" id="{{ pad.id }}">{{ pad.description}}</span></td>
+      <td class="pad-description" id="{{ pad.id }}">{{ pad.description}}</td>
       <td><span class="pad-date" id="{{ pad.id}}">{{ pad.talk_time|date:"m/d H:i" }}</span></td>
     </tr>
   {% endfor %}
+  </tbody>
 </table>
 {% endblock %}
