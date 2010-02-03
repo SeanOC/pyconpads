@@ -2,28 +2,26 @@
 
 {% block js %}
   {{ block.super }}
+  <script src="{{ MEDIA_URL }}site/js/jquery.maskedinput.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="{{ MEDIA_URL }}site/js/jquery.jeditable.masked.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-      $('#edit-btn').toggle(
-        function() {
-          $('.pad').hide();
-          $('.pad-edit').show();
-          $(this).text('Link');
-        }, function() {
-          $('.pad').show();
-          $('.pad-edit').hide();
-          $(this).text('Edit');
-        }
-      );
-      $('.pad-edit span').editable("{% url update-name %}", {
+      $('.pad-description').editable("{% url update-description %}", {
         tooltip: 'click to edit...',
         indicator: '<img src="{{ MEDIA_URL }}site/imgs/ajax-loader.gif" />',
+        placeholder: "–",
         callback: function (result_json) {
                     result = $.parseJSON(result_json)
-                    $(this).text(result.name);
-                    $(this).closest('.pad a').text(result.name)
+                    $(this).text(result.description);
                   }
       });
+      $('.pad-date').editable("{% url update-date %}", {
+        tooltip: 'click to edit...',
+        indicator: '<img src="{{ MEDIA_URL }}site/imgs/ajax-loader.gif" />',
+        type: 'masked',
+        mask: '99/99/9999 99:99',
+        placeholder: '–'
+      })
    });
   </script>
 {% endblock %}
@@ -33,18 +31,28 @@
   .pad-edit {
     display: none;
   }
-  .pad-edit span {
+  .pad-description, .pad-date {
     display: inline;
   }
 </style>
 {% endblock %}
 
 {% block main_content %}
-<a href="#" id="edit-btn">Edit</a>
-<ul>
+<h1>Pad Index</h1>
+<div class="promo">sponsored by HUGE</div>
+<p>Here are all of the pads 
+<table id="pads">
+  <tr>
+    <th>Pad</th>
+    <th>Description</th>
+    <th>Talk Time</th>
+  </tr>
   {% for pad in pads %}
-    <li class="pad"><a href="{{ pad.etherpad_url }}">{{ pad }}</a></li>
-    <li class="pad-edit"><span id="{{ pad.id }}">{{ pad }}</span></li>
+    <tr>
+      <td class="pad"><a href="{{ pad.etherpad_url }}">{{ pad.id }}</a></td>
+      <td><span class="pad-description" id="{{ pad.id }}">{{ pad.description}}</span></td>
+      <td><span class="pad-date" id="{{ pad.id}}">{{ pad.talk_time|date:"m/d/Y H:i" }}</span></td>
+    </tr>
   {% endfor %}
-</ul>
+</table>
 {% endblock %}

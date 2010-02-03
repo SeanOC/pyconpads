@@ -12,18 +12,35 @@ class Pad(models.Model):
         
     def __unicode__(self):
         name = self.id
-        
-        meta = self.padmeta
-        if meta:
-            name = meta.name
-            
         return name
+        
+    def talk_time(self):
+        date = None
+        try:
+            meta = self.meta
+        except PadMeta.DoesNotExist:
+            meta = None
+        if meta:
+            date = self.meta.talk_time
+        
+        return date
+        
+    def description(self):
+        desc = ''
+        try:
+            meta = self.meta
+        except PadMeta.DoesNotExist:
+            meta = None
+        if meta:
+            desc = self.meta.description
+        
+        return desc
         
     def etherpad_url(self):
         return settings.ETHERPAD_URL + self.id
         
 class PadMeta(models.Model):
-    pad = models.OneToOneField(Pad)
-    name = models.CharField(max_length=500, blank=True)
+    pad = models.OneToOneField(Pad, related_name="meta")
+    description = models.CharField(max_length=500, blank=True)
     talk_time = models.DateTimeField(null=True, blank=True)
     hide = models.BooleanField(default=False)
