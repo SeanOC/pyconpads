@@ -19,8 +19,12 @@
         tooltip: 'click to edit...',
         indicator: '<img src="{{ MEDIA_URL }}site/imgs/ajax-loader.gif" />',
         type: 'masked',
-        mask: '99/99/9999 99:99',
-        placeholder: '–'
+        mask: '99/99 99:99',
+        placeholder: '–',
+        callback: function (result_json) {
+          result = $.parseJSON(result_json)
+          $(this).text(result.date);
+        }
       })
    });
   </script>
@@ -51,7 +55,7 @@
     <tr>
       <td class="pad"><a href="{{ pad.etherpad_url }}">{{ pad.id }}</a></td>
       <td><span class="pad-description" id="{{ pad.id }}">{{ pad.description}}</span></td>
-      <td><span class="pad-date" id="{{ pad.id}}">{{ pad.talk_time|date:"m/d/Y H:i" }}</span></td>
+      <td><span class="pad-date" id="{{ pad.id}}">{{ pad.talk_time|date:"m/d H:i" }}</span></td>
     </tr>
   {% endfor %}
 </table>

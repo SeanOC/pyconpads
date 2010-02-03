@@ -44,4 +44,4 @@ def save_pad_date(request):
         meta.talk_time = date
         meta.save()
         
-    return {'date': date.strftime('%m/%d/%Y %H:%M')}
+    return {'date': date.strftime('%m/%d %H:%M')}
