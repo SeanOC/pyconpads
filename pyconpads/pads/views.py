@@ -21,7 +21,7 @@ def expire_page(path, key_prefix=None):
     if cache.has_key(key):
         cache.delete(key)
 
-@cache_page(86400) # 60 * 60 * 24
+@cache_page(300)
 @render_to('list.html')
 def pad_list(request):
     pads = Pad.objects.all().select_related('meta').order_by('id')
